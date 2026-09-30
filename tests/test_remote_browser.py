@@ -1,4 +1,5 @@
 import shlex
+import os
 import stat
 import tempfile
 import unittest
@@ -38,6 +39,7 @@ class BrowserTests(unittest.TestCase):
         self.assertEqual(entries,[])
         self.assertEqual(skipped,['unrecognized output'])
 
+    @unittest.skipIf(os.name == 'nt', 'Requires an executable POSIX shebang fixture')
     def test_listing_through_fake_adb(self):
         with tempfile.TemporaryDirectory() as root:
             folder=Path(root)

@@ -13,10 +13,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
           architecture: x64
@@ -46,7 +46,7 @@ jobs:
           "$hash  AdbValidationConsole.exe" | Set-Content dist/SHA256.txt
 
       - name: Upload Windows executable
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ADB-Validation-Console-Windows-x64
           path: |
