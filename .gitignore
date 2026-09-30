@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+ADB_Output/
+adb_console_config.json
+build/
+dist/
+*.spec

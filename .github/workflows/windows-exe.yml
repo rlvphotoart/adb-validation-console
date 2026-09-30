@@ -1,0 +1,56 @@
+name: Windows executable
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          architecture: x64
+
+      - name: Install build tool
+        run: python -m pip install --disable-pip-version-check pyinstaller==6.22.3
+
+      - name: Run tests
+        run: |
+          python -m py_compile adb_validation_console.py command_library.py config_manager.py platform_tools.py remote_browser.py
+          python -m unittest discover -s tests -v
+
+      - name: Build executable
+        run: python -m PyInstaller --noconfirm --clean --onefile --windowed --name AdbValidationConsole adb_validation_console.py
+
+      - name: Verify executable and write checksum
+        shell: pwsh
+        run: |
+          $exe = 'dist/AdbValidationConsole.exe'
+          if (-not (Test-Path $exe)) { throw 'Windows executable was not created.' }
+          if ((Get-Item $exe).Length -lt 1000000) { throw 'Windows executable is unexpectedly small.' }
+          $stream = [IO.File]::OpenRead((Resolve-Path $exe))
+          try {
+            if ($stream.ReadByte() -ne 0x4D -or $stream.ReadByte() -ne 0x5A) { throw 'Output is not a Windows PE executable.' }
+          } finally { $stream.Dispose() }
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  AdbValidationConsole.exe" | Set-Content dist/SHA256.txt
+
+      - name: Upload Windows executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: ADB-Validation-Console-Windows-x64
+          path: |
+            dist/AdbValidationConsole.exe
+            dist/SHA256.txt
+          if-no-files-found: error
+          retention-days: 30
