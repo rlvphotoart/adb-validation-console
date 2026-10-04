@@ -2,6 +2,18 @@
 
 Portable, local desktop utility for Android Automotive / IVI validation. Python 3, Tkinter and the standard library are sufficient to run from source on Windows or macOS. It never calls a cloud service.
 
+## Interface previews
+
+These screenshots show the running macOS application in `--preview` mode. The visible **PREVIEW**, **SAMPLE DEVICE** and **[SAMPLE]** labels identify built-in sample data; no ADB commands were executed. They demonstrate the interface, not a connected Android/IVI device or completed device validation. [Screenshot provenance](docs/screenshots/README.md)
+
+![ADB Validation Console Dashboard in macOS sample-preview mode](docs/screenshots/adb-dashboard-preview.jpg)
+
+**Dashboard:** connection and device overview, shortcuts for device information, log capture and validation snapshots, diagnostic presets, and the session console. The displayed target and console output are sample fixtures.
+
+![ADB Validation Console Shell page with an unexecuted example command in sample-preview mode](docs/screenshots/adb-shell-preview.jpg)
+
+**Shell:** choose an Android shell command or ADB command and enter one command at a time. This view shows `getprop ro.build.type` typed into the command field; **Run was not pressed**. The console still contains the same sample output.
+
 ## Put it beside Platform Tools
 
 ```text
