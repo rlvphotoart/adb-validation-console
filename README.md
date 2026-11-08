@@ -69,3 +69,7 @@ Validation so far covers automated source tests, the macOS UI in sample preview 
 The tool does not provide an interactive `adb shell` terminal; the Shell page runs one command at a time. Android permissions, root availability, vendor service names and `dmesg` access vary by build. Live logcat/getevent and screenrecord end through Stop. Some long Android operations may leave a partial output file after cancellation. ADB output is decoded as UTF-8 with replacement for invalid bytes. Manual command blocking is a convenience check, not a security sandbox; review command previews before running custom commands. No flashing, partition modification, factory reset, privilege escalation or SELinux changes are implemented.
 
 The device file browser uses Android `ls -la` output. Most current Android builds support this format; unusual vendor `ls` formats may leave some rows unparsed, which the page reports. The browser has been tested with sample listings and on macOS without a connected device, but it still needs a live Android/IVI check for the target build.
+
+## Project case study
+
+[Read the project case study](https://radulucavictor.ro/projects/adb-validation-console/) for the workflow problem, my contribution and verification context. See [Radu Luca Victor's professional portfolio](https://radulucavictor.ro/) for engineering delivery, automotive validation, independent digital projects and the full CV.
